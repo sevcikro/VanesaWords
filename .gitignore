@@ -1,0 +1,6 @@
+.herenow/
+.deploy/
+.codex-remote-attachments/
+.DS_Store
+Thumbs.db
+node_modules/

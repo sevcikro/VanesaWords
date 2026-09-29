@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="sk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="VanesaWords — prémiový anglicko-slovenský slovný drill s 2 000 vysvetlenými slovami."
+    />
+    <meta name="theme-color" content="#090b0c" />
+    <title>VanesaWords — premium language drill</title>
+    <link rel="stylesheet" href="premium.css" />
+    <script src="logic.js" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <div class="ambient ambient-one" aria-hidden="true"></div>
+    <div class="ambient ambient-two" aria-hidden="true"></div>
+
+    <main class="app-shell">
+      <header class="site-header">
+        <a class="brand" href="#" aria-label="VanesaWords — domov">
+          <span class="brand-mark" aria-hidden="true">V</span>
+          <span>VanesaWords</span>
+        </a>
+        <div id="language-pill" class="language-pill" aria-label="Smer prekladu">
+          <span>EN</span><span aria-hidden="true">↔</span><span>SK</span>
+        </div>
+      </header>
+
+      <section id="setup-view" class="view setup-view" aria-labelledby="setup-title">
+        <div class="eyebrow"><span class="eyebrow-dot"></span> Prémiový tréning slovnej zásoby</div>
+        <h1 id="setup-title">Slová, ktoré<br /><span>ostanú.</span></h1>
+        <p class="lead">
+          Zvoľ si smer a tempo. Každá chyba sa vráti, každý význam dostane vysvetlenie
+          a každé kolo ťa posunie o úroveň vyššie.
+        </p>
+
+        <div class="direction-section" aria-labelledby="direction-label">
+          <div class="section-label-row">
+            <h2 id="direction-label">Smer prekladu</h2>
+          </div>
+          <div class="direction-grid" role="radiogroup" aria-label="Smer prekladu v kole">
+            <button class="direction-option" type="button" role="radio" aria-checked="false" data-direction="en-sk">
+              <strong>EN → SK</strong><span>do slovenčiny</span>
+            </button>
+            <button class="direction-option" type="button" role="radio" aria-checked="false" data-direction="sk-en">
+              <strong>SK → EN</strong><span>do angličtiny</span>
+            </button>
+            <button class="direction-option selected" type="button" role="radio" aria-checked="true" data-direction="mixed">
+              <strong>EN ↔ SK</strong><span>mix oboch smerov</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="pack-section" aria-labelledby="pack-label">
+          <div class="section-label-row">
+            <h2 id="pack-label">Veľkosť balíka</h2>
+            <span id="database-status" class="database-status" role="status">Načítavam databázu…</span>
+          </div>
+          <div class="pack-grid" role="radiogroup" aria-label="Počet slov v kole">
+            <button class="pack-option" type="button" role="radio" aria-checked="false" data-size="10">
+              <span class="pack-number">10</span><span class="pack-word">slov</span>
+            </button>
+            <button class="pack-option selected" type="button" role="radio" aria-checked="true" data-size="20">
+              <span class="pack-number">20</span><span class="pack-word">slov</span>
+            </button>
+            <button class="pack-option" type="button" role="radio" aria-checked="false" data-size="50">
+              <span class="pack-number">50</span><span class="pack-word">slov</span>
+            </button>
+            <button class="pack-option" type="button" role="radio" aria-checked="false" data-size="100">
+              <span class="pack-number">100</span><span class="pack-word">slov</span>
+            </button>
+          </div>
+        </div>
+
+        <button id="start-button" class="primary-button" type="button" disabled>
+          <span>Začať nové kolo</span>
+          <span class="button-arrow" aria-hidden="true">↗</span>
+        </button>
+
+        <div class="setup-notes" aria-label="Informácie o tréningu">
+          <div class="note-item">
+            <span class="note-icon" aria-hidden="true">◎</span>
+            <span><strong>2 000</strong> slov v databáze</span>
+          </div>
+          <div class="note-item">
+            <span class="note-icon" aria-hidden="true">↻</span>
+            <span>Chyby sa <strong>vracajú</strong></span>
+          </div>
+          <div class="note-item">
+            <span class="note-icon" aria-hidden="true">Aa</span>
+            <span>Bez ohľadu na <strong>veľkosť písmen, diakritiku a interpunkciu</strong></span>
+          </div>
+        </div>
+      </section>
+
+      <section id="game-view" class="view game-view" aria-labelledby="word-prompt" hidden>
+        <div class="game-topbar">
+          <button id="quit-button" class="text-button" type="button">← Nový balík</button>
+          <div class="round-label"><span id="round-size-label">20</span> slov</div>
+        </div>
+
+        <div class="progress-area">
+          <div class="progress-copy">
+            <span id="progress-label">0 z 20 zvládnutých</span>
+            <span id="queue-label">20 zostáva</span>
+          </div>
+          <div class="progress-track" aria-hidden="true">
+            <div id="progress-bar" class="progress-bar"></div>
+          </div>
+        </div>
+
+        <article class="word-card">
+          <div class="word-card-header">
+            <span id="prompt-label" class="prompt-label">Prelož do slovenčiny</span>
+            <button id="speak-button" class="icon-button" type="button" aria-label="Vysloviť anglické slovo" title="Vysloviť slovo">
+              <span aria-hidden="true">◖))</span>
+            </button>
+          </div>
+          <h1 id="word-prompt" tabindex="-1">word</h1>
+
+          <form id="answer-form" novalidate>
+            <label for="answer-input">Tvoj preklad</label>
+            <div class="answer-row">
+              <input
+                id="answer-input"
+                name="answer"
+                type="text"
+                inputmode="text"
+                autocomplete="off"
+                autocapitalize="none"
+                spellcheck="false"
+                placeholder="Napíš odpoveď…"
+                required
+              />
+              <button id="check-button" class="check-button" type="submit">Skontrolovať</button>
+            </div>
+          </form>
+
+          <div id="feedback" class="feedback" role="status" aria-live="polite" hidden>
+            <div class="feedback-icon" aria-hidden="true"></div>
+            <div class="feedback-copy">
+              <strong id="feedback-title"></strong>
+              <p id="feedback-text"></p>
+              <div id="feedback-explanation" class="feedback-explanation" hidden>
+                <span>Vysvetlenie</span>
+                <p id="feedback-explanation-text"></p>
+              </div>
+            </div>
+            <button id="continue-button" class="continue-button" type="button" hidden>Pokračovať →</button>
+          </div>
+        </article>
+
+        <div class="stats-strip" aria-label="Štatistiky aktuálneho kola">
+          <div><span id="attempts-stat" class="stat-value">0</span><span class="stat-label">pokusov</span></div>
+          <div><span id="accuracy-stat" class="stat-value">—</span><span class="stat-label">úspešnosť</span></div>
+          <div><span id="streak-stat" class="stat-value">0</span><span class="stat-label">séria</span></div>
+        </div>
+      </section>
+
+      <section id="result-view" class="view result-view" aria-labelledby="result-title" hidden>
+        <div class="result-badge" aria-hidden="true">✓</div>
+        <p class="eyebrow centered">Kolo dokončené</p>
+        <h1 id="result-title">Precízna jazda.</h1>
+        <p id="result-message" class="lead result-lead"></p>
+
+        <div class="result-grid">
+          <div class="result-stat"><strong id="result-words">20</strong><span>zvládnutých slov</span></div>
+          <div class="result-stat"><strong id="result-accuracy">100 %</strong><span>úspešnosť</span></div>
+          <div class="result-stat"><strong id="result-review">0</strong><span>slov na zopakovanie</span></div>
+        </div>
+
+        <div class="result-actions">
+          <button id="repeat-button" class="primary-button compact" type="button">
+            <span>Ďalší náhodný balík</span><span class="button-arrow" aria-hidden="true">↗</span>
+          </button>
+          <button id="change-size-button" class="secondary-button" type="button">Zmeniť veľkosť balíka</button>
+        </div>
+      </section>
+
+      <footer>
+        <span>VanesaWords</span>
+        <span class="footer-dot">•</span>
+        <span>Language performance</span>
+      </footer>
+    </main>
+  </body>
+</html>
