@@ -34,6 +34,14 @@ assert.equal(isCorrectAnswer(investment, "investovanie"), true);
 assert.equal(isCorrectAnswer(investment, "investor"), false);
 assert.equal(isCorrectAnswer({ english: "investment" }, "Investment!", "sk-en"), true);
 assert.equal(isCorrectAnswer({ english: "investment" }, "investícia", "sk-en"), false);
+assert.equal(
+  isCorrectAnswer(
+    { english: "says", accepted_english_answers: ["says", "saying", "talking", "talks"] },
+    "talks",
+    "sk-en"
+  ),
+  true
+);
 assert.equal(promptFor({ english: "investment", slovak: "investícia" }, "en-sk"), "investment");
 assert.equal(promptFor({ english: "investment", slovak: "investícia" }, "sk-en"), "investícia");
 assert.equal(correctAnswerFor({ english: "investment", slovak: "investícia" }, "en-sk"), "investícia");

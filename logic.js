@@ -17,7 +17,10 @@
 
   function acceptedAnswers(word, direction = "en-sk") {
     if (direction === "sk-en") {
-      return [normalizeAnswer(word.english)].filter(Boolean);
+      const englishCandidates = Array.isArray(word.accepted_english_answers)
+        ? word.accepted_english_answers
+        : [word.english];
+      return [...new Set(englishCandidates.map(normalizeAnswer).filter(Boolean))];
     }
 
     const candidates = [

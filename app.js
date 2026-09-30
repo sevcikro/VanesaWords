@@ -53,12 +53,18 @@
     missedWordIds: new Set(),
     advanceTimer: null,
     awaitingContinue: false,
+    pronunciationAudio: null,
   };
+
+  const pronunciationDirectory = "audio/en-us/geffen-32";
 
   function showView(view) {
     [elements.setupView, elements.gameView, elements.resultView].forEach((item) => {
       item.hidden = item !== view;
     });
+    const viewName = view.id.replace("-view", "");
+    document.body.dataset.view = viewName;
+    if (view !== elements.gameView) document.body.classList.remove("feedback-visible");
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
@@ -112,6 +118,7 @@
 
   function nextWord() {
     clearTimeout(state.advanceTimer);
+    stopPronunciation();
     if (!state.queue.length) {
       finishRound();
       return;
@@ -129,6 +136,7 @@
     elements.checkButton.disabled = false;
     elements.feedback.hidden = true;
     elements.feedback.className = "feedback";
+    document.body.classList.remove("feedback-visible");
     elements.continueButton.hidden = true;
     updateStats();
     elements.answerInput.focus();
@@ -153,6 +161,7 @@
     elements.feedbackExplanationText.textContent = explanation;
     elements.feedbackExplanation.hidden = !explanation;
     elements.feedback.hidden = false;
+    document.body.classList.add("feedback-visible");
   }
 
   function checkAnswer(event) {
@@ -220,17 +229,41 @@
 
   function returnToSetup() {
     clearTimeout(state.advanceTimer);
+    stopPronunciation();
     state.current = null;
     showView(elements.setupView);
   }
 
-  function speakCurrentWord() {
-    if (!state.current || !("speechSynthesis" in window)) return;
+  function stopPronunciation() {
+    if (!state.pronunciationAudio) return;
+    state.pronunciationAudio.pause();
+    state.pronunciationAudio.currentTime = 0;
+    state.pronunciationAudio = null;
+  }
+
+  function browserSpeechFallback(word) {
+    if (!("speechSynthesis" in window)) return;
     window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(state.current.english);
+    const utterance = new SpeechSynthesisUtterance(word);
     utterance.lang = "en-US";
     utterance.rate = 0.86;
     window.speechSynthesis.speak(utterance);
+  }
+
+  async function speakCurrentWord() {
+    if (!state.current) return;
+    stopPronunciation();
+    const word = state.current.english;
+    const filename = `${word.toLocaleLowerCase("en-US")}.mp3`;
+    const audio = new Audio(`${pronunciationDirectory}/${encodeURIComponent(filename)}`);
+    state.pronunciationAudio = audio;
+    try {
+      await audio.play();
+    } catch (error) {
+      console.warn("Saved pronunciation unavailable; using browser voice", error);
+      state.pronunciationAudio = null;
+      browserSpeechFallback(word);
+    }
   }
 
   async function loadDatabase() {
