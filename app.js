@@ -19,6 +19,7 @@
     wordPrompt: document.querySelector("#word-prompt"),
     promptLabel: document.querySelector("#prompt-label"),
     speakButton: document.querySelector("#speak-button"),
+    speakButtonText: document.querySelector("#speak-button-text"),
     answerForm: document.querySelector("#answer-form"),
     answerInput: document.querySelector("#answer-input"),
     checkButton: document.querySelector("#check-button"),
@@ -179,6 +180,7 @@
     state.attempts += 1;
     elements.answerInput.disabled = true;
     elements.checkButton.disabled = true;
+    if (direction === "sk-en") elements.speakButton.hidden = false;
 
     if (correct) {
       state.correctAttempts += 1;
@@ -235,10 +237,14 @@
   }
 
   function stopPronunciation() {
-    if (!state.pronunciationAudio) return;
-    state.pronunciationAudio.pause();
-    state.pronunciationAudio.currentTime = 0;
-    state.pronunciationAudio = null;
+    if (state.pronunciationAudio) {
+      state.pronunciationAudio.pause();
+      state.pronunciationAudio.currentTime = 0;
+      state.pronunciationAudio = null;
+    }
+    elements.speakButton.classList.remove("playing");
+    elements.speakButton.setAttribute("aria-pressed", "false");
+    elements.speakButtonText.textContent = "Výslovnosť";
   }
 
   function browserSpeechFallback(word) {
@@ -247,6 +253,7 @@
     const utterance = new SpeechSynthesisUtterance(word);
     utterance.lang = "en-US";
     utterance.rate = 0.86;
+    utterance.onend = () => stopPronunciation();
     window.speechSynthesis.speak(utterance);
   }
 
@@ -257,6 +264,10 @@
     const filename = `${word.toLocaleLowerCase("en-US")}.mp3`;
     const audio = new Audio(`${pronunciationDirectory}/${encodeURIComponent(filename)}`);
     state.pronunciationAudio = audio;
+    elements.speakButton.classList.add("playing");
+    elements.speakButton.setAttribute("aria-pressed", "true");
+    elements.speakButtonText.textContent = "Prehrávam…";
+    audio.addEventListener("ended", stopPronunciation, { once: true });
     try {
       await audio.play();
     } catch (error) {

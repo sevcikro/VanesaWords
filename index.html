@@ -13,7 +13,7 @@
     <script src="logic.js" defer></script>
     <script src="app.js" defer></script>
   </head>
-  <body>
+  <body data-view="setup">
     <div class="ambient ambient-one" aria-hidden="true"></div>
     <div class="ambient ambient-two" aria-hidden="true"></div>
 
@@ -89,8 +89,8 @@
             <span>Chyby sa <strong>vracajú</strong></span>
           </div>
           <div class="note-item">
-            <span class="note-icon" aria-hidden="true">Aa</span>
-            <span>Bez ohľadu na <strong>veľkosť písmen, diakritiku a interpunkciu</strong></span>
+            <span class="note-icon" aria-hidden="true">◖))</span>
+            <span><strong>Výslovnosť</strong> pri každom anglickom slove</span>
           </div>
         </div>
       </section>
@@ -114,8 +114,9 @@
         <article class="word-card">
           <div class="word-card-header">
             <span id="prompt-label" class="prompt-label">Prelož do slovenčiny</span>
-            <button id="speak-button" class="icon-button" type="button" aria-label="Vysloviť anglické slovo" title="Vysloviť slovo">
-              <span aria-hidden="true">◖))</span>
+            <button id="speak-button" class="icon-button speak-button" type="button" aria-label="Prehrať anglickú výslovnosť" title="Prehrať anglickú výslovnosť">
+              <span class="speak-glyph" aria-hidden="true">◖))</span>
+              <span id="speak-button-text" class="speak-text">Výslovnosť</span>
             </button>
           </div>
           <h1 id="word-prompt" tabindex="-1">word</h1>
