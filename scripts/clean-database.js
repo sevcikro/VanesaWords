@@ -214,15 +214,222 @@ corrections.set(791, correction("ani, ani nie", ["ani", "ani nie"], "spojka\nPou
 corrections.set(1005, correction("položiť, ležal", ["položiť", "ležal"], "sloveso\nDať niečo do vodorovnej polohy; tiež minulý čas slovesa lie vo význame ležať.", "verb\nTo put something in a flat position; also the past tense of lie meaning to rest flat."));
 corrections.set(1953, correction("lož, klamstvo, klamať, ležať", ["lož", "klamstvo", "klamať", "ležať"], "podstatné meno alebo sloveso\nNepravdivé tvrdenie, hovoriť nepravdu alebo byť vo vodorovnej polohe.", "noun, verb\nA false statement, to say something untrue, or to rest in a flat position."));
 
+// Corrections from the full 2,000-record bilingual review. These are kept
+// separate from the earlier source clean-up so the corrected Slovak side can
+// be regenerated without replacing the original English definition.
+const translationCorrections = new Map([
+  [71, ["iný, ďalší, ostatný", ["iný", "ďalší", "ostatný"]]],
+  [200, ["daný, poskytnutý", ["daný", "poskytnutý"]]],
+  [225, ["videný", ["videný"]]],
+  [236, ["vzatý, zobratý", ["vzatý", "zobratý"]]],
+  [237, ["urobený, hotový", ["urobený", "hotový"]]],
+  [326, ["ukázať, prejaviť, preukázať", ["ukázať", "prejaviť", "preukázať"]]],
+  [355, ["starostlivosť, starosť, starať sa", ["starostlivosť", "starosť", "starať sa"]]],
+  [394, ["skutočný, reálny, ozajstný", ["skutočný", "reálny", "ozajstný"]]],
+  [408, ["čiara, rad, linka", ["čiara", "rad", "linka"]]],
+  [432, ["svetlo, ľahký, svetlý", ["svetlo", "ľahký", "svetlý"]]],
+  [433, ["hra, hrať", ["hra", "hrať"]]],
+  [441, ["pevnina, krajina, pôda, pristáť", ["pevnina", "krajina", "pôda", "pristáť"]]],
+  [465, ["záležitosť, vec, hmota, látka", ["záležitosť", "vec", "hmota", "látka"]]],
+  [478, ["smer, kurz, priebeh", ["smer", "kurz", "priebeh"]]],
+  [589, ["problém, otázka, vydanie, záležitosť", ["problém", "otázka", "vydanie", "záležitosť"]]],
+  [635, ["výsledky, vyplýva, má za následok", ["výsledky", "vyplýva", "má za následok"]]],
+  [653, ["ukázaný, zobrazený", ["ukázaný", "zobrazený"]]],
+  [684, ["dohoda, obchod, zaoberať sa", ["dohoda", "obchod", "zaoberať sa"]]],
+  [711, ["účet, návrh zákona", ["účet", "návrh zákona"]]],
+  [717, ["napísaný, písaný", ["napísaný", "písaný"]]],
+  [718, ["hlavné mesto, kapitál, veľké písmeno", ["hlavné mesto", "kapitál", "veľké písmeno"]]],
+  [719, ["štúdiá, študuje", ["štúdiá", "študuje"]]],
+  [722, ["list, písmeno", ["list", "písmeno"]]],
+  [723, ["podiel, zdieľať, podeliť sa", ["podiel", "zdieľať", "podeliť sa"]]],
+  [734, ["šanca, príležitosť, náhoda", ["šanca", "príležitosť", "náhoda"]]],
+  [749, ["tlač, médiá, stlačiť, tlačiť", ["tlač", "médiá", "stlačiť", "tlačiť"]]],
+  [759, ["výkon, výkonnosť, predstavenie", ["výkon", "výkonnosť", "predstavenie"]]],
+  [779, ["priestor, miesto, vesmír", ["priestor", "miesto", "vesmír"]]],
+  [781, ["chýbať, zmeškať, minúť", ["chýbať", "zmeškať", "minúť"]]],
+  [895, ["tvrdenie, nárok, tvrdiť, žiadať", ["tvrdenie", "nárok", "tvrdiť", "žiadať"]]],
+  [946, ["ponúkol, ponúkaný", ["ponúkol", "ponúkaný"]]],
+  [990, ["účtovať, poplatok, obvinenie", ["účtovať", "poplatok", "obvinenie"]]],
+  [1043, ["úradník, funkcionár, oficiálny", ["úradník", "funkcionár", "oficiálny"]]],
+  [1101, ["problém, ťažkosť, trápiť, obťažovať", ["problém", "ťažkosť", "trápiť", "obťažovať"]]],
+  [1109, ["oznámenie, upozornenie, všimnúť si", ["oznámenie", "upozornenie", "všimnúť si"]]],
+  [1168, ["záležitosti, veci, záleží, má význam", ["záležitosti", "veci", "záleží", "má význam"]]],
+  [1181, ["nevyhnutný, zásadný", ["nevyhnutný", "zásadný"]]],
+  [1197, ["hnedý, hnedá farba", ["hnedý", "hnedá farba"]]],
+  [1202, ["pomoc, pomáhať", ["pomoc", "pomáhať"]]],
+  [1208, ["doprava, preprava, prepravovať", ["doprava", "preprava", "prepravovať"]]],
+  [1264, ["prieskum, skúmať, zamerať", ["prieskum", "skúmať", "zamerať"]]],
+  [1290, ["vedúci pracovník, výkonný", ["vedúci pracovník", "výkonný"]]],
+  [1293, ["bar, tyč, pruh, prekážka", ["bar", "tyč", "pruh", "prekážka"]]],
+  [1300, ["preteky, rasa", ["preteky", "rasa"]]],
+  [1364, ["prejsť, podať, uspieť, priesmyk", ["prejsť", "podať", "uspieť", "priesmyk"]]],
+  [1365, ["kríž, krížiť, prejsť cez", ["kríž", "krížiť", "prejsť cez"]]],
+  [1380, ["obraz, obrázok", ["obraz", "obrázok"]]],
+  [1395, ["kresliť, ťahať, remizovať", ["kresliť", "ťahať", "remizovať"]]],
+  [1396, ["úver, kredit, uznanie, zásluha", ["úver", "kredit", "uznanie", "zásluha"]]],
+  [1406, ["otec, tato", ["otec", "tato"]]],
+  [1448, ["štvorec, námestie, štvorcový", ["štvorec", "námestie", "štvorcový"]]],
+  [1459, ["adresa, osloviť, prejav, príhovor", ["adresa", "osloviť", "prejav", "príhovor"]]],
+  [1490, ["libra, búšiť, tĺcť", ["libra", "búšiť", "tĺcť"]]],
+  [1494, ["pochybnosť, pochybovať, váhať", ["pochybnosť", "pochybovať", "váhať"]]],
+  [1508, ["správny, opraviť, korigovať", ["správny", "opraviť", "korigovať"]]],
+  [1511, ["skala, kameň, rock", ["skala", "kameň", "rock"]]],
+  [1512, ["cieľ, terč", ["cieľ", "terč"]]],
+  [1517, ["odpad, plytvať", ["odpad", "plytvať"]]],
+  [1529, ["zrak, pohľad, výhľad", ["zrak", "pohľad", "výhľad"]]],
+  [1547, ["vydanie, uvoľnenie, uvoľniť, pustiť", ["vydanie", "uvoľnenie", "uvoľniť", "pustiť"]]],
+  [1576, ["kabinet, vláda, skrinka", ["kabinet", "vláda", "skrinka"]]],
+  [1587, ["čistý, čistiť", ["čistý", "čistiť"]]],
+  [1594, ["podrobný, detailný", ["podrobný", "detailný"]]],
+  [1601, ["cieľ, mieriť", ["cieľ", "mieriť"]]],
+  [1629, ["predmet, objekt, namietať", ["predmet", "objekt", "namietať"]]],
+  [1635, ["špicatý, ukázal, nasmeroval", ["špicatý", "ukázal", "nasmeroval"]]],
+  [1657, ["zobraziť, vystaviť, displej", ["zobraziť", "vystaviť", "displej"]]],
+  [1676, ["stopa, trať, koľaj, sledovať", ["stopa", "trať", "koľaj", "sledovať"]]],
+  [1678, ["obsah, spokojný", ["obsah", "spokojný"]]],
+  [1699, ["opačný, protiklad, oproti", ["opačný", "protiklad", "oproti"]]],
+  [1723, ["viesť, sprievodca, návod", ["viesť", "sprievodca", "návod"]]],
+  [1752, ["úcta, rešpekt, ohľad, hľadisko", ["úcta", "rešpekt", "ohľad", "hľadisko"]]],
+  [1770, ["sivý, šedý", ["sivý", "šedý"]]],
+  [1772, ["medveď, niesť, znášať", ["medveď", "niesť", "znášať"]]],
+  [1774, ["veta, trest, odsúdiť", ["veta", "trest", "odsúdiť"]]],
+  [1795, ["prevádzkový, fungujúci, operujúci", ["prevádzkový", "fungujúci", "operujúci"]]],
+  [1805, ["boj, bojovanie, bojový", ["boj", "bojovanie", "bojový"]]],
+  [1807, ["udrieť, štrajk", ["udrieť", "štrajk"]]],
+  [1808, ["biť, poraziť, rytmus", ["biť", "poraziť", "rytmus"]]],
+  [1818, ["ideál, ideálny", ["ideál", "ideálny"]]],
+  [1852, ["bunka, cela", ["bunka", "cela"]]],
+  [1896, ["naučil sa, učený, vzdelaný", ["naučil sa", "učený", "vzdelaný"]]],
+  [1911, ["umenie, umelecké odbory", ["umenie", "umelecké odbory"]]],
+  [1916, ["naplnil, naplnený", ["naplnil", "naplnený"]]],
+  [1920, ["prekvapenie, prekvapiť", ["prekvapenie", "prekvapiť"]]],
+  [1950, ["kvapka, pustiť, klesnúť", ["kvapka", "pustiť", "klesnúť"]]],
+  [1959, ["objednal, nariadil, usporiadaný", ["objednal", "nariadil", "usporiadaný"]]],
+  [1966, ["pokusy, pokúša sa", ["pokusy", "pokúša sa"]]],
+  [1968, ["uviedol, vyhlásil, stanovený", ["uviedol", "vyhlásil", "stanovený"]]],
+  [1982, ["šaty, oblečenie, obliecť", ["šaty", "oblečenie", "obliecť"]]],
+  [1994, ["zločinec, kriminálny, trestný", ["zločinec", "kriminálny", "trestný"]]],
+  [1998, ["zatvoriť, zavretý", ["zatvoriť", "zavretý"]]],
+  [2005, ["ospravedlniť, výhovorka, prepáčte", ["ospravedlniť", "výhovorka", "prepáčte"]]],
+]);
+
+const grammarOverrides = new Map([
+  [355, "podstatné meno alebo sloveso"],
+  [408, "podstatné meno"],
+  [432, "podstatné meno alebo prídavné meno"],
+  [433, "podstatné meno alebo sloveso"],
+  [441, "podstatné meno alebo sloveso"],
+  [635, "podstatné meno v množnom čísle alebo sloveso"],
+  [684, "podstatné meno alebo sloveso"],
+  [723, "podstatné meno alebo sloveso"],
+  [749, "podstatné meno alebo sloveso"],
+  [895, "podstatné meno alebo sloveso"],
+  [990, "podstatné meno alebo sloveso"],
+  [1043, "podstatné meno alebo prídavné meno"],
+  [1101, "podstatné meno alebo sloveso"],
+  [1109, "podstatné meno alebo sloveso"],
+  [1168, "podstatné meno v množnom čísle alebo sloveso"],
+  [1197, "podstatné meno alebo prídavné meno"],
+  [1202, "podstatné meno alebo sloveso"],
+  [1208, "podstatné meno alebo sloveso"],
+  [1264, "podstatné meno alebo sloveso"],
+  [1290, "podstatné meno alebo prídavné meno"],
+  [1364, "podstatné meno alebo sloveso"],
+  [1365, "podstatné meno alebo sloveso"],
+  [1396, "podstatné meno alebo sloveso"],
+  [1448, "podstatné meno alebo prídavné meno"],
+  [1490, "podstatné meno alebo sloveso"],
+  [1494, "podstatné meno alebo sloveso"],
+  [1508, "prídavné meno alebo sloveso"],
+  [1517, "podstatné meno alebo sloveso"],
+  [1547, "podstatné meno alebo sloveso"],
+  [1587, "prídavné meno alebo sloveso"],
+  [1629, "podstatné meno alebo sloveso"],
+  [1657, "podstatné meno alebo sloveso"],
+  [1678, "podstatné meno alebo prídavné meno"],
+  [1699, "prídavné meno, podstatné meno alebo predložka"],
+  [1723, "podstatné meno alebo sloveso"],
+  [1772, "podstatné meno alebo sloveso"],
+  [1774, "podstatné meno alebo sloveso"],
+  [1795, "prídavné meno alebo príčastie"],
+  [1805, "podstatné meno alebo prídavné meno"],
+  [1807, "podstatné meno alebo sloveso"],
+  [1808, "podstatné meno alebo sloveso"],
+  [1818, "podstatné meno alebo prídavné meno"],
+  [1896, "sloveso alebo prídavné meno"],
+  [1920, "podstatné meno alebo sloveso"],
+  [1950, "podstatné meno alebo sloveso"],
+  [1959, "sloveso alebo prídavné meno"],
+  [1966, "podstatné meno v množnom čísle alebo sloveso"],
+  [1982, "podstatné meno alebo sloveso"],
+  [1994, "podstatné meno alebo prídavné meno"],
+  [1998, "sloveso alebo prídavné meno"],
+  [2005, "sloveso, podstatné meno alebo citoslovce"],
+]);
+
+function slovakGrammarLabel(definition) {
+  const firstLine = String(definition).split(/\r?\n/u)[0].toLocaleLowerCase("en");
+  const labels = [];
+  const add = (pattern, label) => {
+    if (pattern.test(firstLine) && !labels.includes(label)) labels.push(label);
+  };
+  add(/article/u, "člen");
+  add(/pronoun|determiner/u, "zámeno alebo určovacie slovo");
+  add(/auxiliary verb/u, "pomocné sloveso");
+  add(/modal verb/u, "modálne sloveso");
+  add(/(^|[,; ])verb([,; ]|$| \()/u, "sloveso");
+  add(/participle/u, "príčastie");
+  add(/(^|[,; ])noun([,; .]|$)/u, /plural/u.test(firstLine) ? "podstatné meno v množnom čísle" : "podstatné meno");
+  add(/adjective/u, "prídavné meno");
+  add(/adverb/u, "príslovka");
+  add(/preposition/u, "predložka");
+  add(/conjunction/u, "spojka");
+  add(/number/u, "číslovka");
+  add(/abbreviation/u, "skratka");
+  add(/title/u, "titul");
+  add(/interjection|exclamation/u, "citoslovce");
+  return labels.length ? labels.join(" alebo ") : "slovný výraz";
+}
+
+function standardizedExplanation(word) {
+  const definition = String(word.definition_en).replace(/\s+/gu, " ");
+  const grammar = grammarOverrides.get(word.id) || slovakGrammarLabel(word.definition_en);
+  let formNote = "";
+  let match = definition.match(/simple past tense and (?:a )?past participle of ([A-Za-z]+)/iu);
+  if (match) {
+    formNote = `Jednoduchý minulý čas a minulé príčastie slovesa „${match[1]}“.`;
+  } else {
+    match = definition.match(/past participle of ([A-Za-z]+)/iu);
+    if (match) formNote = `Minulé príčastie slovesa „${match[1]}“.`;
+  }
+  if (!formNote) {
+    match = definition.match(/simple past tense of ([A-Za-z]+)/iu);
+    if (match) formNote = `Jednoduchý minulý čas slovesa „${match[1]}“.`;
+  }
+  const meaningLabel = word.accepted_answers.length > 1 ? "Najčastejšie slovenské významy" : "Slovenský význam";
+  return `${grammar}\n\n${formNote ? `${formNote} ` : ""}${meaningLabel}: ${word.slovak}.`;
+}
+
 const database = JSON.parse(fs.readFileSync(databasePath, "utf8"));
 const previousCount = database.words.length;
 
 for (const word of database.words) {
   const replacement = corrections.get(word.id);
   if (replacement) Object.assign(word, replacement);
+  const translationReplacement = translationCorrections.get(word.id);
+  if (translationReplacement) {
+    const [slovak, accepted] = translationReplacement;
+    word.slovak = slovak;
+    word.accepted_answers = accepted;
+    word.normalized_answers = [...new Set(accepted.map(normalizeAnswer).filter(Boolean))].sort();
+  }
 }
 
 database.words = database.words.filter((word) => !removeIds.has(word.id));
+
+for (const word of database.words) {
+  word.explanation_sk = standardizedExplanation(word);
+}
 
 const englishAnswersByPrompt = new Map();
 for (const word of database.words) {
@@ -241,11 +448,15 @@ database.count = database.words.length;
 database.curation = {
   ...(database.curation || {}),
   cleaned_at: "2026-09-30",
+  fully_audited_at: "2026-10-02",
   removed_record_ids: [...removeIds].sort((a, b) => a - b),
-  corrected_translation_record_ids: [...corrections.keys()].sort((a, b) => a - b),
+  corrected_translation_record_ids: [...new Set([...corrections.keys(), ...translationCorrections.keys()])].sort((a, b) => a - b),
+  standardized_explanations: database.words.length,
 };
 
 fs.writeFileSync(databasePath, `${JSON.stringify(database, null, 2)}\n`, "utf8");
 console.log(`Removed ${previousCount - database.words.length} records.`);
 console.log(`Corrected ${corrections.size} records.`);
+console.log(`Applied ${translationCorrections.size} full-audit translation corrections.`);
+console.log(`Standardized ${database.words.length} Slovak explanations.`);
 console.log(`Database now contains ${database.words.length} records.`);

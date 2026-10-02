@@ -18,9 +18,11 @@ https://ubuntu-orbit-fqv8.here.now/
 - Po každej odpovedi sa zobrazí správny preklad a slovenské vysvetlenie významu.
 - Kolo skončí až po správnom zodpovedaní všetkých vybraných slov.
 
-Databázu tvorí presne 2 000 unikátnych anglicko-slovenských záznamov v `english_slovak_words.json`. Pôvodný frekvenčný zoznam bol doplnený o 52 základných hesiel z Oxford 3000. Z databázy boli odstránené samostatné písmená, poškodené fragmenty, duplicity a osobné mená bez slovnej zásoby; 171 problematických prekladov a vysvetlení bolo opravených.
+Databázu tvorí presne 2 000 unikátnych anglicko-slovenských záznamov v `english_slovak_words.json`. Pôvodný frekvenčný zoznam bol doplnený o 52 základných hesiel z Oxford 3000. Z databázy boli odstránené samostatné písmená, poškodené fragmenty, duplicity a osobné mená bez slovnej zásoby. Po úplnom riadkovom audite bolo opravených 263 unikátnych záznamov a všetkých 2 000 slovenských vysvetlení bolo nahradených jednotným, skontrolovaným formátom bez poškodených viet zo starého zdroja.
 
 Anglická výslovnosť je uložená ako hotové MP3 súbory v `audio/en-us/geffen-32/`. Aplikácia ich prehráva priamo a pri každom kliknutí preto neposiela nový požiadavok na TTS službu. Súbor `audio/manifest.json` prepája všetkých 2 000 databázových záznamov s 2 000 unikátnymi nahrávkami.
+
+Reprodukovateľný release audit je v `scripts/audit-release.py`. Kontroluje každý záznam, slovenský pravopis, väzbu na manifest, dekódovanie, dĺžku a hlasitosť každého MP3 a lokálnym Whisperom porovnáva vyslovené slovo s anglickým heslom. Výsledok sa ukladá do `audit/release-audit.json`.
 
 Nové alebo chýbajúce nahrávky možno doplniť skriptom `scripts/generate-speechify-audio.js`. Skript používa premennú prostredia `SPEECHIFY_API_KEY`, existujúce MP3 preskočí a kľúč nikam neukladá.
 

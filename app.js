@@ -279,7 +279,7 @@
 
   async function loadDatabase() {
     try {
-      const response = await fetch("english_slovak_words.json");
+      const response = await fetch("english_slovak_words.json?v=full-audit-20261002");
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const data = await response.json();
       if (!Array.isArray(data.words) || data.words.length < 100) {

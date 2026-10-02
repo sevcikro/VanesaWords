@@ -30,6 +30,15 @@ assert.equal(database.words.find((word) => word.english === "hello").cefr_level,
 assert.equal(database.words.find((word) => word.english === "comfortable").cefr_level, "A2");
 assert.equal(database.words.find((word) => word.english === "airport").cefr_level, "A1");
 assert.equal(database.words.find((word) => word.english === "dictionary").slovak, "slovník");
+assert.equal(database.words.find((word) => word.english === "wrote").slovak, "písal, napísal");
+assert.equal(database.words.find((word) => word.english === "written").slovak, "napísaný, písaný");
+assert.deepEqual(database.words.find((word) => word.english === "written").accepted_english_answers, ["written"]);
+assert.equal(database.words.find((word) => word.english === "shown").slovak, "ukázaný, zobrazený");
+assert.equal(database.words.find((word) => word.english === "offered").slovak, "ponúkol, ponúkaný");
+assert.match(database.words.find((word) => word.english === "written").explanation_sk, /Minulé príčastie slovesa „write“/u);
+assert.equal(database.words.every((word) => !/#HODNOTA!|undefined|null/i.test(word.explanation_sk)), true);
+assert.equal(database.curation.fully_audited_at, "2026-10-02");
+assert.equal(database.curation.standardized_explanations, 2000);
 assert.equal(
   database.words.filter((word) => word.source_list === "Oxford 3000").length,
   52
@@ -63,6 +72,7 @@ if (fs.existsSync(audioManifestPath)) {
   for (const item of Object.values(manifest.words)) {
     const audioPath = path.join(__dirname, "..", ...item.file.split("/"));
     assert.equal(fs.statSync(audioPath).size >= 1000, true);
+    assert.equal(item.word.toLowerCase(), path.basename(item.file, ".mp3").toLowerCase());
   }
 
   const audioDirectory = path.join(__dirname, "..", "audio", "en-us", "geffen-32");

@@ -4,3 +4,5 @@
 .DS_Store
 Thumbs.db
 node_modules/
+.audit-tools/
+audit/release-audit-part-*.json
